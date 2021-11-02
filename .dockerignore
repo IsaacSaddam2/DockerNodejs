@@ -1,0 +1,6 @@
+##It will not add these files to container
+node_modules
+DockerFile
+.dockerignore
+git
+.gitignore
