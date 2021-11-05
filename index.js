@@ -6,18 +6,22 @@ const app = express();
 
 //"mongodb://saddam:saddam98@172.22.0.2:27017/?authSource=admin"  //connection string
 
-const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
 
-console.log(mongoUrl);
+const connectRetry = () =>{
+    const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
+    console.log(mongoUrl);
+    mongoose
+    .connect(mongoUrl)  //connection string  mongo is a servicename in docker-compose file 
+    .then(()=>{
+        console.log("connected");
+    })
+    .catch((e)=>{
+        console.log(e);
+        setTimeout(connectRetry,5000);
+    });
+}
 
-mongoose
-.connect(mongoUrl)  //connection string  mongo is a servicename in docker-compose file 
-.then(()=>{
-    console.log("connected");
-})
-.catch((e)=>{
-    console.log(e);
-});
+connectRetry();
 
 app.get('/',(req,res)=>{
     res.send('Hi there u yes u,sorry!');
