@@ -9,5 +9,7 @@ services:
       - ./:/app:ro
       - /app/node_modules
     environment:
-      - NODE_ENV = development
+      - NODE_ENV=development
+      - MONGO_USER=saddam
+      - MONGO_PASSWORD=saddam98
     command: npm start  
