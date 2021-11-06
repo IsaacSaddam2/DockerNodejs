@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { MONGO_PASSWORD, MONGO_IP, MONGO_PORT, MONGO_USER } = require('./config/config');
-
+const postRouter = require('./routes/postRoutes');
 const app = express();
 
 //"mongodb://saddam:saddam98@172.22.0.2:27017/?authSource=admin"  //connection string
@@ -26,6 +26,10 @@ connectRetry();
 app.get('/',(req,res)=>{
     res.send('Hi there u yes u,sorry!');
 })
+
+//localhost:3000/posts
+
+app.use("/api/v1/posts",postRouter);
 const PORT = process.env.PORT || 3000;    //if port is not set in env file then it will set to 3000
 
 app.listen(PORT,()=>{
